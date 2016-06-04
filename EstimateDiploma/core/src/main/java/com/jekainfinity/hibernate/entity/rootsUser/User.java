@@ -1,12 +1,11 @@
 package com.jekainfinity.hibernate.entity.rootsUser;
 
-import org.hibernate.annotations.*;
+import com.jekainfinity.hibernate.entity.userResult.UserResult;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
-import javax.persistence.Table;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -45,6 +44,10 @@ public class User {
     @Cascade({CascadeType.ALL})
     private Set<UserRole> userRole = new HashSet<UserRole>(0);
 
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+    @Cascade({CascadeType.ALL})
+    private Set<UserResult> userResults = new HashSet<UserResult>(0);
+
     public User() {
     }
 
@@ -60,6 +63,14 @@ public class User {
         this.password = password;
         this.enabled = enabled;
         this.userRole = userRole;
+    }
+
+    public Set<UserResult> getUserResults() {
+        return userResults;
+    }
+
+    public void setUserResults(Set<UserResult> userResults) {
+        this.userResults = userResults;
     }
 
     public Date getbDay() {
